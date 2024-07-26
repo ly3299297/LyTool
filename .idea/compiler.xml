@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="thinkiot-consumer" />
+        <module name="ly-aigpt" />
+        <module name="ly-pay" />
+        <module name="thinkiot-service" />
+        <module name="ly-oss" />
+        <module name="thinkiot-config" />
+        <module name="thinkiot-wap" />
+        <module name="thinkiot-producer" />
+        <module name="thinkiot-jobflow" />
+        <module name="thinkiot-collect" />
+        <module name="thinkiot-app" />
+        <module name="thinkiot-job" />
+        <module name="thinkiot-business" />
+        <module name="thinkiot-mybatis" />
+        <module name="thinkiot-sdk" />
+        <module name="thinkiot-api" />
+        <module name="thinkiot-mobile" />
+        <module name="thinkiot-core" />
+        <module name="thinkiot-web" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="aoac" options="" />
+      <module name="ly-aigpt" options="-parameters" />
+    </option>
+  </component>
+</project>

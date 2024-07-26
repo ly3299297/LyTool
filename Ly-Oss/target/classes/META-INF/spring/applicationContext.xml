@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd"
+       default-lazy-init="true">
+
+	<context:property-placeholder ignore-resource-not-found="true" ignore-unresolvable="true"
+		location="classpath*:/application.properties" />
+
+	<!-- 扫包 包含Service 注解 ,排除其他注解 -->
+	<context:component-scan base-package="com.lenovo"/>
+	<bean class="com.lenovo.thinkiot.core.context.SpringContextUtils" lazy-init="false" />
+
+    <!--
+       ABORT（缺省）：抛出TaskRejectedException异常，然后不执行
+       DISCARD：不执行，也不抛出异常
+       DISCARD_OLDEST：丢弃queue中最旧的那个任务
+       CALLER_RUNS：不在新线程中执行任务，而是有调用者所在的线程来执行即同步调用
+    -->
+    <task:executor id="asyncExecutor" pool-size="20-200" queue-capacity="200" keep-alive="30" rejection-policy="ABORT"/>
+    <task:annotation-driven executor="asyncExecutor"/>
+
+    <aop:aspectj-autoproxy proxy-target-class="true" />
+    <context:annotation-config/>
+    <bean id="logAspect" class="com.lenovo.thinkiot.core.aspect.LogAspect"/>
+    <bean id="operLogAspect" class="com.lenovo.thinkiot.aspect.OperLogAspect"/>
+    <bean id="dynamicDataSourceAspect" class="com.lenovo.thinkiot.common.aspect.DynamicDataSourceAspect"/>
+    <!-- 配置druid监控spring jdbc -->
+    <!--<bean id="druid-stat-interceptor" class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor" />-->
+
+    <!--<bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut" scope="prototype">-->
+        <!--<property name="patterns">-->
+            <!--<list>-->
+                <!--<value>com.lenovo.thinkiot.service.*.*</value>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--邮件发送测试-->
+    <bean id="javaMailSender"
+          class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="protocol" value="${email.protocol}"/>
+        <property name="host" value="${email.host}"/>
+        <property name="port" value="${email.port}"/>
+        <property name="username" value="${email.username}"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.auth">${email.auth}</prop>
+                <prop key="mail.smtp.timeout">${email.timout}</prop>
+            </props>
+        </property>
+
+    </bean>
+
+    <bean id="javaMailSSLSender"
+          class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="protocol" value="${email.protocol}"/>
+        <property name="host" value="${email.host}"/>
+        <property name="port" value="${email.reply.port}"/>
+        <property name="username" value="${email.replyname}"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.auth">${email.auth}</prop>
+                <prop key="mail.smtp.timeout">${email.timout}</prop>
+                <prop key="mail.smtp.ssl.enable">true</prop>
+                <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+                <prop key="mail.smtp.auth">true</prop>
+            </props>
+        </property>
+
+    </bean>
+
+    <bean id="sendMsgService" class="com.lenovo.thinkiot.service.sendmsg.SendMsgServiceImpl">
+        <property name="javaMailSender" ref="javaMailSender"/>
+        <property name="javaMailSSLSender" ref="javaMailSSLSender"/>
+    </bean>
+
+	<!-- 强制使用cglib代理，如果不设置，将默认使用jdk的代理，但是jdk的代理是基于接口的 -->
+    <aop:config proxy-target-class="true"/>
+    <aop:config>
+        <!--定义切面-->
+        <aop:aspect ref="logAspect">
+            <!-- 定义切入点 (配置在com.lenovo.thinkiot.service下所有的类在调用之前都会被拦截)-->
+            <aop:pointcut id="logPointCut" expression="execution(* com.lenovo.thinkiot.service..*(..))"/>
+            <aop:around method="around" pointcut-ref="logPointCut"/>
+        </aop:aspect>
+        <aop:aspect ref="dynamicDataSourceAspect">
+            <!-- 定义切入点 (配置在com.lenovo.thinkiot.service下所有的类在调用之前都会被拦截)-->
+            <aop:pointcut id="dynamicDataSourceCut" expression="execution(* com.lenovo.thinkiot.service..*(..))"/>
+            <aop:around method="around" pointcut-ref="dynamicDataSourceCut"/>
+        </aop:aspect>
+        <aop:aspect ref="operLogAspect">
+            <!-- 定义切入点 (配置在com.lenovo.thinkiot.service下所有的类在调用之前都会被拦截)-->
+            <aop:pointcut id="poPointCut" expression="execution(* com.lenovo.thinkiot.mybatis.mapper.*.insert*(..))
+                                                        or execution(* com.lenovo.thinkiot.mybatis.mapper.*.update*(..))
+                                                        or execution(* com.lenovo.thinkiot.mybatis.mapper.*.delete*(..))"/>
+            <aop:around method="monitorMapper" pointcut-ref="poPointCut"/>
+        </aop:aspect>
+        <aop:aspect ref="operLogAspect">
+            <!-- 定义切入点 (配置在com.lenovo.thinkiot.service下所有的类在调用之前都会被拦截)-->
+            <aop:pointcut id="proccessCut" expression="execution(* com.lenovo.thinkiot.service..*(..))"/>
+            <aop:around method="monitorService" pointcut-ref="proccessCut"/>
+        </aop:aspect>
+    </aop:config>
+    <!--<aop:config>-->
+        <!--<aop:advisor advice-ref="druid-stat-interceptor" pointcut-ref="druid-stat-pointcut" />-->
+        <!--<aop:advisor advice-ref="dataSourceAnnotationInterceptor" pointcut-ref="datasource-pointcut"/>-->
+    <!--</aop:config>-->
+</beans>

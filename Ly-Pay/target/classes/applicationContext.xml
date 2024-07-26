@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+       default-lazy-init="true">
+
+    <description>Spring公共配置</description>
+
+    <context:annotation-config/>
+    <bean id="redisTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="10" />
+        <property name="maxPoolSize" value="100" />
+        <!-- 队列最大长度 -->
+        <property name="queueCapacity" value="400" />
+        <property name="keepAliveSeconds" value="300" />
+        <!-- 线程池对拒绝任务(无线程可用)的处理策略 -->
+        <property name="rejectedExecutionHandler">
+            <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
+        </property>
+    </bean>
+
+    <bean id="redisHttpSessionConfiguration" class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
+        <property name="redisNamespace" value="wap"/>
+        <property name="maxInactiveIntervalInSeconds" value="1600"/>
+        <property name="redisTaskExecutor" ref="redisTaskExecutor"/>
+    </bean>
+
+    <bean id="logAspect" class="com.lenovo.thinkiot.core.aspect.LogAspect"/>
+    <!-- 强制使用cglib代理，如果不设置，将默认使用jdk的代理，但是jdk的代理是基于接口的 -->
+    <aop:config proxy-target-class="true" />
+    <aop:config>
+        <!--定义切面-->
+        <aop:aspect ref="logAspect">
+            <!-- 定义切入点 (配置在com.lenovo.thinkiot.service下所有的类在调用之前都会被拦截)-->
+            <aop:pointcut id="logPointCut" expression="execution(* com.lenovo.thinkiot.wap.controller..*(..))"/>
+            <aop:around method="around" pointcut-ref="logPointCut"/>
+        </aop:aspect>
+    </aop:config>
+</beans>
