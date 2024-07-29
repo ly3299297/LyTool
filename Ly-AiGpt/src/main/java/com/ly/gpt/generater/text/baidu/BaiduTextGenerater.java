@@ -174,54 +174,54 @@ public class BaiduTextGenerater implements TextGenerater<BaiduText2TextInput, Ba
         return jsonStr;
     }
 
-//    private static final String ROLE_SYSTEM = "system";
-//    private static final String ROLE_USER = "user";
-//    private static final String ROLE_ASSISTANT = "assistant";
-//
-//    private static final String BAIDU_URL = "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie_speed";
-//    private static final String BAIDU_HELLO ="你是 BaiDu，由 BaiDu AI 提供的人工智能助手，你更擅长中文和英文的对话。你会为用户提供安全，有帮助，准确的回答。";
-//
-//
-//    public static void main(String[] args) {
-//        List<ChatMessage> messages = new ArrayList<>();
-//        Text2TextInput input = new BaiduText2TextInput();
-//        messages.add(new ChatMessage(ROLE_SYSTEM, BAIDU_HELLO));
-//        messages.add(new ChatMessage(ROLE_USER,"简述中华五千年历史"));
-//        input.setMessages(messages);
-//
-//        BaiduText2TextInput requestEntiry = (BaiduText2TextInput) input;
-//        OkHttpClient client = OkHttpUtil.getInstance();
-//
-//        BaiduTextGenerater generater = new BaiduTextGenerater(client, "CXUNZS8lM9eajYHUp24BBNNm", "Tc5Ywb2WHZgDfRWLj82mrqxENA3mSfk5");
-//        generater.url(BAIDU_URL);
-//        generater.text2TextStream(requestEntiry, streamOutputResposeOberverBuild());
-//    }
-//
-//    static Text2TextStreamObserver streamOutputResposeOberverBuild() {
-//        StringBuffer sb = new StringBuffer();
-//        return new Text2TextStreamObserver() {
-//            Boolean flag = Boolean.TRUE;
-//            @Override
-//            public void onBegin() {
-//            }
-//
-//            @Override
-//            public void onNext(String data) {
-//                    System.out.println(":::"+data);
-//            }
-//
-//            @Override
-//            public void onEnd() {
-//                System.out.println("结束");
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable throwable) {
-//                System.out.println("报错了");
-//            }
-//        };
-//
-//
-//    }
+    private static final String ROLE_SYSTEM = "system";
+    private static final String ROLE_USER = "user";
+    private static final String ROLE_ASSISTANT = "assistant";
+
+    private static final String BAIDU_URL = "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie_speed";
+    private static final String BAIDU_HELLO ="你是 BaiDu，由 BaiDu AI 提供的人工智能助手，你更擅长中文和英文的对话。你会为用户提供安全，有帮助，准确的回答。";
+
+
+    public static void main(String[] args) {
+        List<ChatMessage> messages = new ArrayList<>();
+        Text2TextInput input = new BaiduText2TextInput();
+        messages.add(new ChatMessage(ROLE_SYSTEM, BAIDU_HELLO));
+        messages.add(new ChatMessage(ROLE_USER,"简述中华五千年历史"));
+        input.setMessages(messages);
+
+        BaiduText2TextInput requestEntiry = (BaiduText2TextInput) input;
+        OkHttpClient client = OkHttpUtil.getInstance();
+
+        BaiduTextGenerater generater = new BaiduTextGenerater(client, "CXUNZS8lM9eajYHUp24BBNNm", "Tc5Ywb2WHZgDfRWLj82mrqxENA3mSfk5");
+        generater.url(BAIDU_URL);
+        generater.text2TextStream(requestEntiry, streamOutputResposeOberverBuild());
+    }
+
+    static Text2TextStreamObserver streamOutputResposeOberverBuild() {
+        StringBuffer sb = new StringBuffer();
+        return new Text2TextStreamObserver() {
+            Boolean flag = Boolean.TRUE;
+            @Override
+            public void onBegin() {
+            }
+
+            @Override
+            public void onNext(String data) {
+                    System.out.println(":::"+data);
+            }
+
+            @Override
+            public void onEnd() {
+                System.out.println("结束");
+            }
+
+            @Override
+            public void onFailure(Throwable throwable) {
+                System.out.println("报错了");
+            }
+        };
+
+
+    }
 
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/../../mvn-repository/org/springframework/boot/spring-boot-starter-parent/2.1.3.RELEASE/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Ly-AiGpt/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Ly-AiGpt/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Ly-Oss/src/main/java" charset="UTF-8" />
@@ -10,37 +9,5 @@
     <file url="file://$PROJECT_DIR$/Ly-Pay/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-api/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-api/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-app/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-app/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-business/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-business/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-collect/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-collect/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-config/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-config/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-consumer/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-consumer/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-core/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-core/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-job/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-job/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-jobflow/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-jobflow/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-mobile/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-mobile/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-mybatis/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-mybatis/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-producer/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-producer/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-sdk/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-sdk/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-service/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-wap/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-wap/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-web/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thinkiot-web/src/main/resources" charset="UTF-8" />
   </component>
 </project>
